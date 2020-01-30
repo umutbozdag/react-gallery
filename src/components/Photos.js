@@ -51,8 +51,8 @@ export default class Photos extends Component {
 
 
     componentWillMount() {
-        this.fetchDefaultPhotos();
-        this.getRandomPhoto(3);
+        this.fetchPhotos();
+        //  this.getRandomPhoto(3);
     }
 
     getRandomPhoto = (count) => {
@@ -60,8 +60,8 @@ export default class Photos extends Component {
             fetch(`https://api.unsplash.com/photos/random?client_id=${process.env.REACT_APP_API_KEY}`)
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data);
                     this.setState({ randomPhotos: data });
+                    console.log(this.state.randomPhotos.map(randomPhoto => console.log(randomPhoto)));
                 });
         }
     }
@@ -126,42 +126,6 @@ export default class Photos extends Component {
         }
     }
 
-    fetchDefaultPhotos = () => {
-        console.log("default images");
-
-        const { count, start } = this.state;
-        this.setState({ start: this.state.start + 1 });
-
-        const url = `https://api.unsplash.com/photos?per_page=${count}&page=${start}&order_by=${this.state.orderBy}&client_id=${process.env.REACT_APP_API_KEY}`
-        fetch(url)
-            .then(res => res.json())
-            .then(data => {
-                this.setState({ photos: this.state.photos.concat(data) });
-                console.log(data);
-                console.log(url);
-            })
-            .catch(err => console.log(err));
-    }
-
-
-
-    fetchSearchedPhotos = () => {
-        console.log("search images");
-        const { count, start } = this.state;
-        this.setState({ start: this.state.start + 1 });
-
-        const url = `https://api.unsplash.com/search/photos?per_page=${count}&page=${start}&query=${this.state.userInput}&order_by=${this.state.orderBy}&client_id=${process.env.REACT_APP_API_KEY}`
-        fetch(url)
-            .then(res => res.json())
-            .then(data => {
-                this.setState({ searchResult: this.state.searchResult.concat(data.results) });
-                console.log(data);
-                console.log(url);
-            })
-            .catch(err => console.log(err));
-
-    }
-
     displaySearchResults = () => {
 
         return (
@@ -183,10 +147,14 @@ export default class Photos extends Component {
                     }
                 >
                     <div className="cards">
-                        {this.state.searchResult.map(photo => (
+                        {this.state.searchResult.map((photo, i) => (
                             <div class="photo-card" width="18rem">
                                 <Link to={`/photos/${photo.id}`}>
-                                    <LazyLoadImage effect="blur" key={photo.id} className="photo" src={photo.urls && photo.urls.small} alt={photo.alt_description} />
+                                    <LazyLoadImage effect="blur"
+                                        key={i}
+                                        className="photo"
+                                        src={photo.urls && photo.urls.small}
+                                        alt={photo.alt_description} />
                                     <div class="card-content">
                                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                     </div>
@@ -219,11 +187,16 @@ export default class Photos extends Component {
             >
                 <div className="cards">
 
-                    {this.state.photos.map(photo => (
+                    {this.state.photos.map((photo, i) => (
                         <div key={photo.id} className="photo-card">
 
                             <Link to={`/photos/${photo.id}`}>
-                                <LazyLoadImage effect="blur" key={photo.id} className="photo" src={photo.urls && photo.urls.small} alt={photo.alt_description} />
+                                <LazyLoadImage
+                                    effect="blur"
+                                    key={i}
+                                    className="photo"
+                                    src={photo.urls && photo.urls.small}
+                                    alt={photo.alt_description} />
                             </Link>
                             <div className="photo-content">
                                 <p>{convertDate(photo.created_at)}</p>
@@ -233,7 +206,6 @@ export default class Photos extends Component {
                     ))}
                 </div>
             </InfiniteScroll>
-
         )
     }
 

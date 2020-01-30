@@ -37,3 +37,13 @@
   left: 0;
   bottom: 0;
 }
+
+.collection-card {
+  border: 1px solid red;
+  margin-right: 12px;
+  margin-bottom: 12px;
+}
+
+.previews {
+  display: flex;
+}

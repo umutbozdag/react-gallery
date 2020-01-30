@@ -7,11 +7,10 @@ import Photos from './components/Photos';
 import PhotoDetail from './components/PhotoDetail';
 import NotFound from './components/NotFound';
 import About from './components/About';
-import PhotoStatistics from './components/PhotoStatistics';
+import Collections from './components/Collections';
+import CollectionDetail from './components/CollectionDetail';
 
 function App() {
-
-
 
   return (
     <div className="App">
@@ -21,7 +20,9 @@ function App() {
           <Route path="/home" component={Home}></Route>
           <Route exact path="/" component={Home}></Route>
           <Route exact path="/photos" component={Photos}></Route>
-          <Route exact path="/photos/:photoId" component={PhotoDetail}></Route>
+          <Route path="/photos/:photoId" component={PhotoDetail}></Route>
+          <Route exact path="/collections" component={Collections}></Route>
+          <Route path="/collections/:collectionId/photos" component={CollectionDetail}></Route>
           <Route path="/about" component={About}></Route>
           <Route path="/" component={NotFound}></Route>
         </Switch>

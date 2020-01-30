@@ -6,7 +6,7 @@ export default function Nav() {
         <div>
 
             <nav className="navbar navbar-expand-lg">
-                <div className="container">
+                <div className="container-fluid">
 
                     <Link to="/"><a className="navbar-brand" href="#">ReactGallery</a></Link>
 
@@ -22,6 +22,10 @@ export default function Nav() {
 
                         <Link to="/about">
                             <a className="nav-link" href="#">About</a>
+                        </Link>
+
+                        <Link to="/collections">
+                            <a className="nav-link" href="#">Collections</a>
                         </Link>
 
                     </div>

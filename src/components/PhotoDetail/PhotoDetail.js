@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Component } from 'react'
-import PhotoStatistics from './PhotoStatistics';
+import PhotoStatistics from '../PhotoStatistics/PhotoStatistics';
 
 export default class PhotoDetail extends Component {
 

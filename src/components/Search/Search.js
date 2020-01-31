@@ -9,11 +9,11 @@ export default function Search(props) {
                 onSubmit={props.onSubmitHandler}
                 class="form-inline mt-2">
                 <input
+                    placeholder={props.placeholder}
                     onChange={props.onChangeHandler}
                     name="search"
-                    class="form-control mr-sm-2 btn-lg"
+                    className="form-control mr-sm-2 btn-lg"
                     type="text"
-                    placeholder="Search"
                     aria-label="Search" />
             </form>
         </div>

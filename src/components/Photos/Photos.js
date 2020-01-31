@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
-import Search from './Search';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
+import Search from '../Search/Search';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import convertDate from '../utils/convertDate';
-import Carousel from './Carousel';
-import Spinner from './Spinner';
-
+import convertDate from '../../utils/convertDate';
+import Carousel from '../Carousel/Carousel';
+import Image from 'react-graceful-image';
+import './Photos.css';
 
 export default class Photos extends Component {
 
@@ -51,9 +49,9 @@ export default class Photos extends Component {
     }
 
 
-    componentWillMount() {
+    componentDidMount() {
         this.fetchPhotos();
-        //  this.getRandomPhoto(3);
+        this.getRandomPhoto(3);
     }
 
     getRandomPhoto = (count) => {
@@ -62,38 +60,19 @@ export default class Photos extends Component {
             fetch(`https://api.unsplash.com/photos/random?client_id=${process.env.REACT_APP_API_KEY}`)
                 .then(res => res.json())
                 .then(data => {
+                    let randomArr = [];
+                    // randomPhoto.push(data);
+
+                    // for (randomPhoto in data) {
+                    //     randomArr.push();
+                    // }
+
                     this.setState({ randomPhotos: data });
-                    console.log(randomPhotos.map(randomPhoto => console.log(randomPhoto)));
+                    console.log(randomPhotos);
+                    // console.log(randomPhotos.map(randomPhoto => console.log(randomPhoto)));
                 });
         }
     }
-
-    displayCarousel = () => {
-        return (
-            <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="..." class="d-block w-100" alt="..." />
-                    </div>
-                    <div class="carousel-item">
-                        <img src="..." class="d-block w-100" alt="..." />
-                    </div>
-                    <div class="carousel-item">
-                        <img src="..." class="d-block w-100" alt="..." />
-                    </div>
-                </div>
-                <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-        )
-    }
-
 
     fetchPhotos = () => {
         const { count, start, hasQuery, userInput, orderBy, photos, searchResult } = this.state;
@@ -128,8 +107,6 @@ export default class Photos extends Component {
     }
 
 
-
-
     displayPhotos = () => {
         const { photos, searchResult, hasQuery } = this.state;
 
@@ -141,7 +118,7 @@ export default class Photos extends Component {
                         dataLength={searchResult.length}
                         next={this.fetchPhotos}
                         hasMore={true}
-                        loader={<Spinner />}
+                        // loader={<Spinner />}
                         endMessage={
                             <p style={{ textAlign: 'center' }}>
                                 <b>There is no more photo!</b>
@@ -152,8 +129,9 @@ export default class Photos extends Component {
                             {searchResult.map((photo, i) => (
                                 <div class="photo-card" width="18rem">
                                     <Link to={`/photos/${photo.id}`}>
-                                        <LazyLoadImage effect="blur"
+                                        <Image
                                             key={i}
+                                            placeholderColor={photo.color}
                                             className="photo"
                                             src={photo.urls && photo.urls.small}
                                             alt={photo.alt_description} />
@@ -177,7 +155,7 @@ export default class Photos extends Component {
                     dataLength={photos.length}
                     next={this.fetchPhotos}
                     hasMore={true}
-                    loader={<Spinner />}
+                    // loader={<Spinner />}
                     endMessage={<p style={{ textAlign: 'center' }}>
                         <b>There is no more photo!</b>
                     </p>}
@@ -185,12 +163,14 @@ export default class Photos extends Component {
                     <div className="cards">
 
                         {photos.map((photo, i) => (
-                            <div key={photo.id} className="photo-card">
+                            <div key={i} className="photo-card">
 
                                 <Link to={`/photos/${photo.id}`}>
-                                    <LazyLoadImage
-                                        effect="blur"
-                                        key={i}
+                                    <Image
+                                        width="400"
+                                        height="600"
+                                        key={photo.id}
+                                        placeholderColor={photo.color}
                                         className="photo"
                                         src={photo.urls && photo.urls.small}
                                         alt={photo.alt_description} />
@@ -215,9 +195,10 @@ export default class Photos extends Component {
 
             <div>
                 <Search
+                    placeholder="Search photos..."
                     onChangeHandler={this.onChangeHandler}
                     onSubmitHandler={this.onSubmitHandler} />
-                {/* <Carousel randomPhotos={randomPhotos}></Carousel> */}
+                <Carousel randomPhotos={randomPhotos}></Carousel>
                 <h1>Photos</h1>
 
                 {this.displayPhotos()}

@@ -1,0 +1,19 @@
+.cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.photo-card {
+    margin-bottom: 12px;
+    margin-right: 12px;
+    position: relative;
+}
+
+.photo-card img {}
+
+.card-content {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}

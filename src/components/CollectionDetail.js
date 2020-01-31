@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import convertDate from '../utils/convertDate';
 import LazyLoadImage from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import Spinner from './Spinner';
 
 export default class CollectionDetail extends Component {
 
@@ -14,7 +15,8 @@ export default class CollectionDetail extends Component {
             collectionDetail: [],
             collectionId: this.props.match.params.collectionId,
             start: 1,
-            count: 30
+            count: 30,
+            hasMore: null
         }
     }
 
@@ -29,33 +31,35 @@ export default class CollectionDetail extends Component {
         fetch(url)
             .then(res => res.json())
             .then(data => {
-                this.setState({ collectionDetail: data });
+                this.setState({ collectionDetail: this.state.collectionDetail.concat(data) });
                 console.log(this.state.collections);
 
                 console.log(data);
-                console.log(url);
+                // console.log(url);
+                // if (data.length == 0) {
+                //     this.setState({ hasMore: false });
+                // }
+                // console.log(this.state.collectionDetail);
             });
     }
 
     displayCollectionDetail = () => {
-        console.log(this.state.collectionDetail);
+        const { collectionDetail } = this.state;
         return (
             <InfiniteScroll
-                dataLength={this.state.collectionDetail.length}
+                dataLength={collectionDetail.length}
                 next={this.getCollectionDetail}
                 hasMore={true}
-                loader={<div class="spinner-border" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>}
+                loader={<Spinner />}
                 endMessage={<p style={{ textAlign: 'center' }}>
                     <b>There is no more photo!</b>
                 </p>}
             >
                 <div className="cards">
 
-                    {this.state.collectionDetail.map((collection, i) => (
+                    {collectionDetail.map((collection, i) => (
                         <div key={collection.id} className="photo-card">
-                            <Link to={`/photos/${collection.id}/photos`}>
+                            <Link to={`/photos/${collection.id}`}>
                                 <img
                                     effect="blur"
                                     key={i}
@@ -80,7 +84,7 @@ export default class CollectionDetail extends Component {
         return (
             <div>
                 <h1>Collection detail</h1>
-                {this.state.collectionId.length != 0 ? this.displayCollectionDetail() : <h1>asdasda</h1>}
+                {this.state.collectionId.length != 0 ? this.displayCollectionDetail() : <Spinner />}
             </div >
         )
     }

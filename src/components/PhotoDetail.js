@@ -29,13 +29,13 @@ export default class PhotoDetail extends Component {
 
 
     render() {
-
+        const { photo } = this.state;
 
         return (
             <div>
                 <h1>Photo Detail</h1>
-                <img src={this.state.photo.urls && this.state.photo.urls.regular} alt="" />
-                <a href={`${this.state.photo.urls && this.state.photo.urls.full}`} target="_blank" download>Download</a>
+                <img src={photo.urls && photo.urls.regular} alt="" />
+                <a href={photo.urls && photo.urls.full} target="_blank" download>Download</a>
                 <PhotoStatistics photoId={this.state.photoId}></PhotoStatistics>
             </div >
         )

@@ -6,6 +6,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import convertDate from '../utils/convertDate';
 import Carousel from './Carousel';
+import Spinner from './Spinner';
 
 
 export default class Photos extends Component {
@@ -29,14 +30,14 @@ export default class Photos extends Component {
         // In every submit i want it to start query from page 1
         this.setState({ start: 1 });
 
-        const { count, start } = this.state;
-        const url = `https://api.unsplash.com/search/photos?per_page=${count}&page=${start}&query=${this.state.userInput}&order_by=latest&client_id=${process.env.REACT_APP_API_KEY}`;
+        const { count, start, userInput, searchResult } = this.state;
+        const url = `https://api.unsplash.com/search/photos?per_page=${count}&page=${start}&query=${userInput}&order_by=latest&client_id=${process.env.REACT_APP_API_KEY}`;
         fetch(url)
             .then(res => res.json())
             .then(data => {
                 this.setState({ searchResult: data.results, hasQuery: true });
-                console.log(this.state.searchResult);
-                console.log("query:" + this.state.userInput);
+                console.log(searchResult);
+                console.log("query:" + userInput);
                 console.log(url);
 
             })
@@ -56,12 +57,13 @@ export default class Photos extends Component {
     }
 
     getRandomPhoto = (count) => {
+        const { randomPhotos } = this.state
         for (let i = 0; i <= count; i++) {
             fetch(`https://api.unsplash.com/photos/random?client_id=${process.env.REACT_APP_API_KEY}`)
                 .then(res => res.json())
                 .then(data => {
                     this.setState({ randomPhotos: data });
-                    console.log(this.state.randomPhotos.map(randomPhoto => console.log(randomPhoto)));
+                    console.log(randomPhotos.map(randomPhoto => console.log(randomPhoto)));
                 });
         }
     }
@@ -94,16 +96,16 @@ export default class Photos extends Component {
 
 
     fetchPhotos = () => {
-        if (this.state.hasQuery) {
+        const { count, start, hasQuery, userInput, orderBy, photos, searchResult } = this.state;
+        if (hasQuery) {
             console.log("search images");
-            const { count, start } = this.state;
-            this.setState({ start: this.state.start + 1 });
+            this.setState({ start: start + 1 });
 
-            const url = `https://api.unsplash.com/search/photos?per_page=${count}&page=${start}&query=${this.state.userInput}&order_by=${this.state.orderBy}&client_id=${process.env.REACT_APP_API_KEY}`
+            const url = `https://api.unsplash.com/search/photos?per_page=${count}&page=${start}&query=${userInput}&order_by=${orderBy}&client_id=${process.env.REACT_APP_API_KEY}`
             fetch(url)
                 .then(res => res.json())
                 .then(data => {
-                    this.setState({ searchResult: this.state.searchResult.concat(data.results) });
+                    this.setState({ searchResult: searchResult.concat(data.results) });
                     console.log(data);
                     console.log(url);
                 })
@@ -111,14 +113,13 @@ export default class Photos extends Component {
         } else {
             console.log("default images");
 
-            const { count, start } = this.state;
-            this.setState({ start: this.state.start + 1 });
+            this.setState({ start: start + 1 });
 
-            const url = `https://api.unsplash.com/photos?per_page=${count}&page=${start}&order_by=${this.state.orderBy}&client_id=${process.env.REACT_APP_API_KEY}`
+            const url = `https://api.unsplash.com/photos?per_page=${count}&page=${start}&order_by=${orderBy}&client_id=${process.env.REACT_APP_API_KEY}`
             fetch(url)
                 .then(res => res.json())
                 .then(data => {
-                    this.setState({ photos: this.state.photos.concat(data) });
+                    this.setState({ photos: photos.concat(data) });
                     console.log(data);
                     console.log(url);
                 })
@@ -126,101 +127,100 @@ export default class Photos extends Component {
         }
     }
 
-    displaySearchResults = () => {
 
-        return (
-            <div>
-                {this.displayCarousel()}
+
+
+    displayPhotos = () => {
+        const { photos, searchResult, hasQuery } = this.state;
+
+        if (hasQuery) {
+            return (
+                <div>
+                    {/* {this.displayCarousel()} */}
+                    <InfiniteScroll
+                        dataLength={searchResult.length}
+                        next={this.fetchPhotos}
+                        hasMore={true}
+                        loader={<Spinner />}
+                        endMessage={
+                            <p style={{ textAlign: 'center' }}>
+                                <b>There is no more photo!</b>
+                            </p>
+                        }
+                    >
+                        <div className="cards">
+                            {searchResult.map((photo, i) => (
+                                <div class="photo-card" width="18rem">
+                                    <Link to={`/photos/${photo.id}`}>
+                                        <LazyLoadImage effect="blur"
+                                            key={i}
+                                            className="photo"
+                                            src={photo.urls && photo.urls.small}
+                                            alt={photo.alt_description} />
+                                        <div class="card-content">
+                                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                        </div>
+                                    </Link>
+
+
+                                </div>
+                            ))}
+                        </div>
+
+                    </InfiniteScroll>
+                </div>
+            )
+        } else {
+            return (
+
                 <InfiniteScroll
-                    dataLength={this.state.searchResult.length}
+                    dataLength={photos.length}
                     next={this.fetchPhotos}
                     hasMore={true}
-                    loader={
-                        <div class="spinner-border" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                    }
-                    endMessage={
-                        <p style={{ textAlign: 'center' }}>
-                            <b>There is no more photo!</b>
-                        </p>
-                    }
+                    loader={<Spinner />}
+                    endMessage={<p style={{ textAlign: 'center' }}>
+                        <b>There is no more photo!</b>
+                    </p>}
                 >
                     <div className="cards">
-                        {this.state.searchResult.map((photo, i) => (
-                            <div class="photo-card" width="18rem">
+
+                        {photos.map((photo, i) => (
+                            <div key={photo.id} className="photo-card">
+
                                 <Link to={`/photos/${photo.id}`}>
-                                    <LazyLoadImage effect="blur"
+                                    <LazyLoadImage
+                                        effect="blur"
                                         key={i}
                                         className="photo"
                                         src={photo.urls && photo.urls.small}
                                         alt={photo.alt_description} />
-                                    <div class="card-content">
-                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    </div>
                                 </Link>
-
-
+                                <div className="photo-content">
+                                    <p>{convertDate(photo.created_at)}</p>
+                                </div>
                             </div>
+
                         ))}
                     </div>
-
                 </InfiniteScroll>
-            </div>
-        )
+            )
+        }
 
-    }
-
-    displayPhotos = () => {
-        return (
-
-            <InfiniteScroll
-                dataLength={this.state.photos.length}
-                next={this.fetchPhotos}
-                hasMore={true}
-                loader={<div class="spinner-border" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>}
-                endMessage={<p style={{ textAlign: 'center' }}>
-                    <b>There is no more photo!</b>
-                </p>}
-            >
-                <div className="cards">
-
-                    {this.state.photos.map((photo, i) => (
-                        <div key={photo.id} className="photo-card">
-
-                            <Link to={`/photos/${photo.id}`}>
-                                <LazyLoadImage
-                                    effect="blur"
-                                    key={i}
-                                    className="photo"
-                                    src={photo.urls && photo.urls.small}
-                                    alt={photo.alt_description} />
-                            </Link>
-                            <div className="photo-content">
-                                <p>{convertDate(photo.created_at)}</p>
-                            </div>
-                        </div>
-
-                    ))}
-                </div>
-            </InfiniteScroll>
-        )
     }
 
 
     render() {
+        const { randomPhotos } = this.state;
         return (
 
             <div>
                 <Search
                     onChangeHandler={this.onChangeHandler}
                     onSubmitHandler={this.onSubmitHandler} />
-                <Carousel randomPhotos={this.state.randomPhotos}></Carousel>
+                {/* <Carousel randomPhotos={randomPhotos}></Carousel> */}
                 <h1>Photos</h1>
 
-                {this.state.hasQuery ? this.displaySearchResults() : this.displayPhotos()}
+                {this.displayPhotos()}
 
 
             </div>

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import convertDate from '../utils/convertDate';
 import LazyLoadImage from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import Spinner from './Spinner';
 
 
 class Collections extends Component {
@@ -13,7 +14,8 @@ class Collections extends Component {
         this.state = {
             collections: [],
             start: 1,
-            count: 30
+            count: 30,
+            hasMore: null
         }
     }
 
@@ -22,36 +24,38 @@ class Collections extends Component {
     }
 
     getCollections = () => {
-        const { count, start } = this.state;
+        const { count, start, collections } = this.state;
         this.setState({ start: this.state.start + 1 });
 
         fetch(`https://api.unsplash.com/collections?per_page=${count}&page=${start}&client_id=${process.env.REACT_APP_API_KEY}`)
             .then(res => res.json())
             .then(data => {
-                this.setState({ collections: data });
-                console.log(this.state.collections);
-
+                // this.setState({ collections: data });
+                console.log(collections);
+                this.setState({ collections: collections.concat(data) });
+                if (data.length == 0) {
+                    this.setState({ hasMore: false });
+                }
                 console.log(data);
             });
     }
 
     displayCollections = () => {
+        const { collections } = this.state;
         return (
 
             <div>
                 <InfiniteScroll
-                    dataLength={this.state.collections.length}
+                    dataLength={collections.length}
                     next={this.getCollections}
                     hasMore={true}
-                    loader={<div class="spinner-border" role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div>}
+                    loader={<Spinner />}
                     endMessage={<p style={{ textAlign: 'center' }}>
                         <b>There is no more collections!</b>
                     </p>}
                 >
                     <div className="collections">
-                        {this.state.collections.map(collection => (
+                        {collections.map(collection => (
                             <div key={collection.id} className="collection-card">
                                 <div className="previews">
                                     <Link to={`/collections/${collection.id}/photos`}>
@@ -76,7 +80,7 @@ class Collections extends Component {
     render() {
         return (
             <div>
-                {this.state.collections.length != 0 ? this.displayCollections() : <h1>asd</h1>}
+                {this.state.collections.length != 0 ? this.displayCollections() : <Spinner />}
             </div>
         )
     }

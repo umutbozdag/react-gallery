@@ -1,4 +1,13 @@
-.card-deck {
-    flex-wrap: wrap;
-    flex-direction: column;
-}
+    .photo-info {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+    }
+
+    .gallery {
+        margin: 0 auto;
+    }
+
+    img {
+        margin-bottom: 10px;
+    }

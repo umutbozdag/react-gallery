@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Link } from 'react-router-dom';
-import convertDate from '../../utils/convertDate';
+import convertDate from '../../helpers/convertDate';
 import Spinner from '../Spinner/Spinner';
-import Search from '../Search/Search';
-import Image from 'react-graceful-image';
+import Search from '../SearchBar/SearchBar';
+import { Avatar, Icon, Tag } from 'antd';
+import ModalImage from 'react-modal-image';
+import Masonry from 'react-masonry-component';
+import { masonryOptions } from '../../helpers/masonryOptions';
+import './Collections.css';
 
 class Collections extends Component {
 
@@ -80,7 +84,7 @@ class Collections extends Component {
                                         <Link to={`/collections/${collection.id}`}>
                                             <div className="preview">
                                                 {collection.preview_photos.map(previewPhoto => (
-                                                    <Image
+                                                    <img
                                                         key={previewPhoto.id}
                                                         src={previewPhoto.urls.thumb}
                                                         alt="" />
@@ -92,7 +96,6 @@ class Collections extends Component {
                             ))}
                         </div>
                     </InfiniteScroll>
-
                 </div>
             )
         } else {
@@ -104,9 +107,10 @@ class Collections extends Component {
                         next={this.getCollections}
                         hasMore={true}
                         endMessage={<p style={{ textAlign: 'center' }}>
-                            <b>There is no more collections!</b>
-                        </p>}
-                    >
+                            <b>There is no more photo!</b>
+                        </p>}>
+
+
                         <div className="collections">
                             {collections.map(collection => (
                                 <div key={collection.id} className="collection-card">
@@ -114,7 +118,41 @@ class Collections extends Component {
                                         <Link to={`/collections/${collection.id}`}>
                                             <div className="preview">
                                                 {collection.preview_photos.map(previewPhoto => (
-                                                    <Image
+                                                    <img
+                                                        key={previewPhoto.id}
+                                                        src={previewPhoto.urls.thumb}
+                                                        alt="" />
+                                                ))}
+
+                                                {collection.tags.map((tag, i) => (
+                                                    <Tag key={i}>{tag.title}</Tag>
+                                                ))}
+                                            </div>
+                                        </Link>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                    </InfiniteScroll>
+
+
+                    {/* <InfiniteScroll
+                        dataLength={searchResult.length}
+                        next={this.getCollections}
+                        hasMore={true}
+                        endMessage={<p style={{ textAlign: 'center' }}>
+                            <b>There is no more collections!</b>
+                        </p>}
+                    >
+                        <div className="collections">
+                            {searchResult.map(collection => (
+                                <div key={collection.id} className="collection-card">
+                                    <div className="previews">
+                                        <Link to={`/collections/${collection.id}`}>
+                                            <div className="preview">
+                                                {collection.preview_photos.map(previewPhoto => (
+                                                    <img
                                                         key={previewPhoto.id}
                                                         src={previewPhoto.urls.thumb}
                                                         alt="" />
@@ -125,8 +163,7 @@ class Collections extends Component {
                                 </div>
                             ))}
                         </div>
-                    </InfiniteScroll>
-
+                    </InfiniteScroll>  */}
                 </div>
             )
         }
@@ -161,8 +198,7 @@ class Collections extends Component {
         return (
             <div>
                 <Search placeholder="Search collections..." onChangeHandler={this.onChangeHandler} onSubmitHandler={this.onSubmitHandler}></Search>
-                {this.displayCollections()}
-                {/* {this.state.collections.length != 0 ? this.displayCollections() : <Spinner />} */}
+                {this.state.collections.length != 0 ? this.displayCollections() : <Spinner />}
             </div>
         )
     }

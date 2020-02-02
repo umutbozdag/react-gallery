@@ -1,14 +1,8 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Nav from './components/Nav';
-import Home from './components/Home';
-import Photos from './components/Photos';
-import PhotoDetail from './components/PhotoDetail';
-import NotFound from './components/NotFound';
-import About from './components/About';
-import Collections from './components/Collections';
-import CollectionDetail from './components/CollectionDetail';
+import { Nav, Home, Photos, PhotoDetail, Collections, CollectionDetail, About, NotFound, Categories, UserProfile } from './components/index';
+import { BackTop } from 'antd';
 
 function App() {
 
@@ -22,11 +16,13 @@ function App() {
           <Route exact path="/photos" component={Photos}></Route>
           <Route path="/photos/:photoId" component={PhotoDetail}></Route>
           <Route exact path="/collections" component={Collections}></Route>
-          <Route path="/collections/:collectionId/photos" component={CollectionDetail}></Route>
+          <Route path="/collections/:collectionId" component={CollectionDetail}></Route>
+          <Route exact path="/users/:username" component={UserProfile}></Route>
           <Route path="/about" component={About}></Route>
           <Route path="/" component={NotFound}></Route>
         </Switch>
       </Router>
+      <BackTop />
     </div>
   );
 }

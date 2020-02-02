@@ -1,0 +1,8 @@
+.SearchBar {
+    display: flex;
+    justify-content: center;
+}
+
+.input {
+    width: 600px;
+}

@@ -4,46 +4,5 @@
   align-items: center;
   /* background: #000033; */
   justify-content: center;
-  height: 25vh;
-}
-
-.form-inline {
-  display: flex;
-  flex-direction: column;
-}
-
-.navbar {
-  /* background: #000033 !important; */
-}
-
-.cards {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.photo-card {
-  margin-bottom: 12px;
-  margin-right: 12px;
-  position: relative;
-}
-
-.photo-card img {
-  border-radius: 4px;
-}
-
-.card-content {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-}
-
-.collection-card {
-  border: 1px solid red;
-  margin-right: 12px;
-  margin-bottom: 12px;
-}
-
-.previews {
-  display: flex;
+  margin-top: 48px;
 }

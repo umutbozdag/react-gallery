@@ -1,5 +1,5 @@
 import React from 'react'
-import Search from '../Search/Search';
+import Search from '../SearchBar/SearchBar';
 import Photos from '../Photos/Photos';
 
 export default function Home() {

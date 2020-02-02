@@ -21,7 +21,7 @@
 
 .menuCon {
     width: calc(100% - 150px);
-    float: left;
+    display: flex;
 }
 
 .menuCon .ant-menu-item {
@@ -42,15 +42,11 @@
 }
 
 .menuCon .leftMenu {
-    float: left;
-}
-
-.menuCon .rightMenu {
-    float: right;
+    margin-right: auto;
 }
 
 .barsMenu {
-    float: right;
+    margin-left: auto;
     height: 32px;
     padding: 6px;
     margin-top: 8px;
@@ -98,6 +94,10 @@
 
 .ant-drawer-body .ant-menu-horizontal>.ant-menu-item:hover {
     border-bottom-color: transparent;
+}
+
+.LeftMenu {
+    display: flex;
 }
 
 @media(max-width: 767px) {

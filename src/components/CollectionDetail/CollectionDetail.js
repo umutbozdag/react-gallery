@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Link } from 'react-router-dom';
-import convertDate from '../../utils/convertDate';
+import convertDate from '../../helpers/convertDate';
 import Spinner from '../Spinner/Spinner';
-import Image from 'react-graceful-image';
 import './CollectionDetail.css';
-
+import { Avatar, Icon } from 'antd';
+import Masonry from 'react-masonry-component';
+import Collections from '../Collections/Collections';
+import { masonryOptions } from '../../helpers/masonryOptions';
+import PropTypes from 'prop-types';
+import ModalImage from 'react-modal-image';
 
 export default class CollectionDetail extends Component {
 
@@ -46,39 +50,53 @@ export default class CollectionDetail extends Component {
 
     displayCollectionDetail = () => {
         const { collectionDetail } = this.state;
+
         return (
             <InfiniteScroll
                 dataLength={collectionDetail.length}
                 next={this.getCollectionDetail}
                 hasMore={true}
-                endMessage={
-                    <p style={{ textAlign: 'center' }}>
-                        <b>There is no more photo!</b>
-                    </p>
-                }>
-                <div className="card-deck">
-                    {collectionDetail.map((collection, i) => (
-                        <div key={collection.id} className="card">
-                            <Link to={`/photos/${collection.id}`}>
-                                <Image
-                                    placeholderColor={collection.color}
-                                    key={i}
-                                    className="photo"
-                                    placeholderColor={collection.color}
-                                    src={collection.urls && collection.urls.small}
-                                    alt={collection.alt_description} />
-                            </Link>
-                            <div className="photo-content">
-                                <p>{convertDate(collection.created_at)}</p>
+                endMessage={<p style={{ textAlign: 'center' }}>
+                    <b>There is no more photo!</b>
+                </p>}>
+
+                <Masonry
+                    className={'gallery'} // default ''
+                    options={masonryOptions} // default {}
+                    disableImagesLoaded={false} // default false
+                    updateOnEachImageLoad={false} // default false and works only if disableImagesLoaded is false
+                >
+                    {collectionDetail.map((photo, i) => (
+
+                        <div key={i}>
+
+                            <ModalImage
+                                small={photo.urls && photo.urls.small}
+                                large={photo.urls && photo.urls.full}
+                                alt={photo.alt_description}
+                                className="photo-modal"
+                                showRotate
+                            />
+                            <a href={photo.links.download}>
+                                <Icon className="icon-download" type="download" />
+                            </a>
+
+                            <div className="photo-info">
+                                <Link to={`/users/${photo.user.username}`}>
+                                    <Avatar className="user-avatar" src={photo.user.profile_image.large} />
+                                    <p className="username">{photo.user.name}</p>
+                                </Link>
+
+                                <Link to={`/photos/${photo.id}`}>
+                                    <Icon className="icon-eye" type="arrow-right" />
+                                </Link>
                             </div>
                         </div>
-
                     ))}
-                </div>
+                </Masonry>
+
             </InfiniteScroll>
         )
-
-
     }
 
     render() {
@@ -90,4 +108,16 @@ export default class CollectionDetail extends Component {
             </div >
         )
     }
+}
+
+CollectionDetail.propTypes = {
+    match: PropTypes.shape({
+        params: PropTypes.shape({
+            collectionId: PropTypes.number.isRequired
+        })
+    }),
+};
+
+CollectionDetail.defaultTypes = {
+    collectionId: 0
 }

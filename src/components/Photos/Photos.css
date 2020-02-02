@@ -1,19 +1,72 @@
-.cards {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+.photos {
+  display: flex;
+  justify-content: center;
 }
 
-.photo-card {
-    margin-bottom: 12px;
-    margin-right: 12px;
-    position: relative;
+.photo-info {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  bottom: 18px;
+  align-items: center;
 }
 
-.photo-card img {}
+.photo-info .user-avatar {
+  margin-left: 6px;
+}
 
-.card-content {
-    position: absolute;
-    left: 0;
-    bottom: 0;
+.photo-info .username {
+  font-weight: 600;
+  color: #ffffff;
+  display: inline-block;
+  margin-left: 6px;
+}
+
+.username:hover {
+  color: #ddd9d9;
+  transition: all 0.2s ease;
+}
+
+.photo-info .left {
+  display: flex;
+}
+
+.right {
+  position: relative;
+}
+
+.gallery {
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.icon-eye {
+  font-size: 22px;
+  color: #ffffff !important;
+  margin-right: 12px;
+  border-radius: 24px;
+  padding: 6px;
+}
+
+.icon-eye:hover,
+.icon-download:hover {
+  background: #000000;
+  transition: all 0.2s ease;
+}
+
+.download-container {
+  position: relative;
+}
+
+.icon-download {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 6px;
+  color: #ffffff !important;
+  font-size: 22px;
+  border-radius: 24px;
+  margin-right: 12px;
+  margin-top: 8px;
+  cursor: pointer;
 }

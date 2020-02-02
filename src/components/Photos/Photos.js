@@ -1,11 +1,17 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
-import Search from '../Search/Search';
+import Search from '../SearchBar/SearchBar';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import convertDate from '../../utils/convertDate';
-import Carousel from '../Carousel/Carousel';
-import Image from 'react-graceful-image';
+import convertDate from '../../helpers/convertDate';
+import Carousel from '../ImageSlider/ImageSlider';
 import './Photos.css';
+import Categories from '../Categories/Categories';
+import Options from '../Options/Options';
+import { Avatar, Icon } from 'antd';
+import Masonry from 'react-masonry-component';
+import { masonryOptions } from '../../helpers/masonryOptions';
+import ModalImage from "react-modal-image";
+import PropTypes from 'prop-types';
 
 export default class Photos extends Component {
 
@@ -16,7 +22,7 @@ export default class Photos extends Component {
             searchResult: [],
             userInput: '',
             photos: [],
-            count: 5,
+            count: 20,
             start: 1,
             orderBy: 'latest',
             randomPhotos: []
@@ -29,7 +35,7 @@ export default class Photos extends Component {
         this.setState({ start: 1 });
 
         const { count, start, userInput, searchResult } = this.state;
-        const url = `https://api.unsplash.com/search/photos?per_page=${count}&page=${start}&query=${userInput}&order_by=latest&client_id=${process.env.REACT_APP_API_KEY}`;
+        const url = `https://api.unsplash.com/search/photos?per_page=${count}&page=${start}&query=${userInput}&client_id=${process.env.REACT_APP_API_KEY}`;
         fetch(url)
             .then(res => res.json())
             .then(data => {
@@ -37,21 +43,30 @@ export default class Photos extends Component {
                 console.log(searchResult);
                 console.log("query:" + userInput);
                 console.log(url);
-
             })
             .catch(err => console.log(err));
+
     }
 
 
     onChangeHandler = (e) => {
+
         console.log(e.target.value);
         this.setState({ userInput: e.target.value });
     }
 
 
+    handleOptionChange = (value) => {
+        console.log(`selected ${value}`);
+
+        this.fetchPhotos(value);
+        // this.displayPhotos();
+    }
+
+
     componentDidMount() {
         this.fetchPhotos();
-        this.getRandomPhoto(3);
+        // this.getRandomPhoto(3);
     }
 
     getRandomPhoto = (count) => {
@@ -75,10 +90,19 @@ export default class Photos extends Component {
     }
 
     fetchPhotos = () => {
-        const { count, start, hasQuery, userInput, orderBy, photos, searchResult } = this.state;
+        const {
+            count,
+            start,
+            hasQuery,
+            userInput,
+            orderBy,
+            photos,
+            searchResult } = this.state;
+
+        this.setState({ start: start + 1 });
+
         if (hasQuery) {
             console.log("search images");
-            this.setState({ start: start + 1 });
 
             const url = `https://api.unsplash.com/search/photos?per_page=${count}&page=${start}&query=${userInput}&order_by=${orderBy}&client_id=${process.env.REACT_APP_API_KEY}`
             fetch(url)
@@ -92,8 +116,6 @@ export default class Photos extends Component {
         } else {
             console.log("default images");
 
-            this.setState({ start: start + 1 });
-
             const url = `https://api.unsplash.com/photos?per_page=${count}&page=${start}&order_by=${orderBy}&client_id=${process.env.REACT_APP_API_KEY}`
             fetch(url)
                 .then(res => res.json())
@@ -106,106 +128,140 @@ export default class Photos extends Component {
         }
     }
 
-
     displayPhotos = () => {
-        const { photos, searchResult, hasQuery } = this.state;
-
-        if (hasQuery) {
-            return (
-                <div>
-                    {/* {this.displayCarousel()} */}
-                    <InfiniteScroll
-                        dataLength={searchResult.length}
-                        next={this.fetchPhotos}
-                        hasMore={true}
-                        // loader={<Spinner />}
-                        endMessage={
-                            <p style={{ textAlign: 'center' }}>
-                                <b>There is no more photo!</b>
-                            </p>
-                        }
-                    >
-                        <div className="cards">
-                            {searchResult.map((photo, i) => (
-                                <div class="photo-card" width="18rem">
-                                    <Link to={`/photos/${photo.id}`}>
-                                        <Image
-                                            key={i}
-                                            placeholderColor={photo.color}
-                                            className="photo"
-                                            src={photo.urls && photo.urls.small}
-                                            alt={photo.alt_description} />
-                                        <div class="card-content">
-                                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                        </div>
-                                    </Link>
 
 
-                                </div>
-                            ))}
-                        </div>
-
-                    </InfiniteScroll>
-                </div>
-            )
-        } else {
-            return (
-
-                <InfiniteScroll
-                    dataLength={photos.length}
-                    next={this.fetchPhotos}
-                    hasMore={true}
-                    // loader={<Spinner />}
-                    endMessage={<p style={{ textAlign: 'center' }}>
-                        <b>There is no more photo!</b>
-                    </p>}
-                >
-                    <div className="cards">
-
-                        {photos.map((photo, i) => (
-                            <div key={i} className="photo-card">
-
-                                <Link to={`/photos/${photo.id}`}>
-                                    <Image
-                                        width="400"
-                                        height="600"
-                                        key={photo.id}
-                                        placeholderColor={photo.color}
-                                        className="photo"
-                                        src={photo.urls && photo.urls.small}
-                                        alt={photo.alt_description} />
-                                </Link>
-                                <div className="photo-content">
-                                    <p>{convertDate(photo.created_at)}</p>
-                                </div>
-                            </div>
-
-                        ))}
-                    </div>
-                </InfiniteScroll>
-            )
-        }
 
     }
 
 
     render() {
-        const { randomPhotos } = this.state;
+        const { photos, searchResult, hasQuery, userInput, randomPhotos } = this.state;
+
         return (
 
             <div>
+
                 <Search
+                    marginTop="48px"
                     placeholder="Search photos..."
                     onChangeHandler={this.onChangeHandler}
                     onSubmitHandler={this.onSubmitHandler} />
-                <Carousel randomPhotos={randomPhotos}></Carousel>
-                <h1>Photos</h1>
+                {/* <Carousel randomPhotos={randomPhotos}></Carousel> */}
+                <Options handleOptionChange={this.handleOptionChange} />
+                {/* <Categories /> */}
+                {hasQuery ?
+                    (<div>
+                        <h1>Showing photos for search term:{userInput}</h1>
+                        <InfiniteScroll
+                            dataLength={searchResult.length}
+                            next={this.fetchPhotos}
+                            hasMore={true}
+                            endMessage={<p style={{ textAlign: 'center' }}>
+                                <b>There is no more photo!</b>
+                            </p>}>
 
-                {this.displayPhotos()}
+                            <Masonry
+                                className={'gallery'} // default ''
+                                options={masonryOptions} // default {}
+                                disableImagesLoaded={false} // default false
+                                updateOnEachImageLoad={false} // default false and works only if disableImagesLoaded is false
+                            >
+                                {searchResult.map((photo, i) => (
 
+                                    <div key={i}>
+
+                                        <ModalImage
+                                            small={photo.urls && photo.urls.small}
+                                            large={photo.urls && photo.urls.full}
+                                            alt={photo.alt_description}
+                                            className="photo-modal"
+                                            showRotate
+                                        />
+                                        <a href={photo.links.download}>
+                                            <Icon className="icon-download" type="download" />
+                                        </a>
+
+                                        <div className="photo-info">
+                                            <Link to={`/users/${photo.user.username}`}>
+                                                <Avatar className="user-avatar" src={photo.user.profile_image.large} />
+                                                <p className="username">{photo.user.name}</p>
+                                            </Link>
+
+                                            <Link to={`/photos/${photo.id}`}>
+                                                <Icon className="icon-eye" type="arrow-right" />
+                                            </Link>
+                                        </div>
+                                    </div>
+                                ))}
+                            </Masonry>
+
+                        </InfiniteScroll>
+                    </div>)
+
+                    :
+
+                    (<div className="container">
+
+                        <InfiniteScroll
+                            dataLength={photos.length}
+                            next={this.fetchPhotos}
+                            hasMore={true}
+                            endMessage={<p style={{ textAlign: 'center' }}>
+                                <b>There is no more photo!</b>
+                            </p>}>
+                            <h1 className="title">Photos</h1>
+
+                            <Masonry
+                                className={'gallery'} // default ''
+                                options={masonryOptions} // default {}
+                                disableImagesLoaded={false} // default false
+                                updateOnEachImageLoad={false} // default false and works only if disableImagesLoaded is false
+                            >
+                                {photos.map((photo, i) => (
+
+                                    <div key={i}>
+
+                                        <ModalImage
+                                            small={photo.urls && photo.urls.small}
+                                            large={photo.urls && photo.urls.full}
+                                            alt={photo.alt_description}
+                                            className="photo-modal"
+                                            showRotate
+                                        />
+                                        <a href={photo.links.download}>
+                                            <Icon className="icon-download" type="download" />
+
+                                        </a>
+
+                                        <div className="photo-info">
+                                            <Link to={`/users/${photo.user.username}`}>
+                                                <Avatar className="user-avatar" src={photo.user.profile_image.large} />
+                                                <p className="username">{photo.user.name}</p>
+                                            </Link>
+
+                                            <Link to={`/photos/${photo.id}`}>
+                                                <Icon className="icon-eye" type="arrow-right" />
+                                            </Link>
+                                        </div>
+                                    </div>
+                                ))}
+                            </Masonry>
+
+                        </InfiniteScroll>
+                    </div>)}
 
             </div>
         )
     }
 
+}
+
+
+Photos.propTypes = {
+    username: PropTypes.string,
+}
+
+Photos.defaultProps = {
+    username: ''
 }

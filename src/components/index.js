@@ -7,7 +7,9 @@ import NotFound from './NotFound/NotFound';
 import PhotoDetail from './PhotoDetail/PhotoDetail';
 import Photos from './Photos/Photos';
 import PhotoStatistics from './PhotoStatistics/PhotoStatistics';
-import Search from './Search/Search';
+import SearchBar from './SearchBar/SearchBar';
+import Categories from './Categories/Categories';
+import UserProfile from './UserProfile/UserProfile';
 
 export {
     About,
@@ -19,5 +21,7 @@ export {
     PhotoDetail,
     Photos,
     PhotoStatistics,
-    Search
+    SearchBar,
+    Categories,
+    UserProfile
 }

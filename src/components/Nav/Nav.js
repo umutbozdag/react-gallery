@@ -4,6 +4,7 @@ import RightMenu from './RightMenu'
 import { Drawer, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import './Nav.css';
+
 class Nav extends Component {
     state = {
         current: 'mail',
@@ -19,11 +20,12 @@ class Nav extends Component {
             visible: false,
         });
     };
+
     render() {
         return (
             <nav className="menuBar">
                 <div className="logo">
-                    <a href="">logo</a>
+                    <Link to='/'>ReactGallery</Link>
                 </div>
                 <div className="menuCon">
                     <div className="leftMenu">
@@ -31,12 +33,13 @@ class Nav extends Component {
                     </div>
                     <div className="rightMenu">
                         <RightMenu />
+
                     </div>
                     <Button className="barsMenu" type="primary" onClick={this.showDrawer}>
                         <span className="barsBtn"></span>
                     </Button>
                     <Drawer
-                        title="Basic Drawer"
+                        title="ReactGallery"
                         placement="right"
                         closable={false}
                         onClose={this.onClose}
@@ -44,6 +47,7 @@ class Nav extends Component {
                     >
                         <LeftMenu />
                         <RightMenu />
+
                     </Drawer>
                 </div>
             </nav>

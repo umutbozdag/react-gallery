@@ -61,10 +61,10 @@ export default class CollectionDetail extends Component {
                 </p>}>
 
                 <Masonry
-                    className={'gallery'} // default ''
-                    options={masonryOptions} // default {}
-                    disableImagesLoaded={false} // default false
-                    updateOnEachImageLoad={false} // default false and works only if disableImagesLoaded is false
+                    className='gallery'
+                    options={masonryOptions}
+                    disableImagesLoaded={false}
+                    updateOnEachImageLoad={false}
                 >
                     {collectionDetail.map((photo, i) => (
 
@@ -88,13 +88,11 @@ export default class CollectionDetail extends Component {
                                 </Link>
 
                                 <Link to={`/photos/${photo.id}`}>
-                                    <Icon className="icon-eye" type="arrow-right" />
-                                </Link>
+                                    <Icon className="icon-circle" type="info-circle" />                                            </Link>
                             </div>
                         </div>
                     ))}
                 </Masonry>
-
             </InfiniteScroll>
         )
     }

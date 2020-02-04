@@ -3,7 +3,6 @@ import { Input, Form } from 'antd';
 import './SearchBar.css';
 import PropTypes from 'prop-types';
 
-
 const { Search } = Input;
 
 export default function SearchBar(props) {

@@ -31,7 +31,7 @@ export default class PhotoStatistics extends Component {
             .then(res => res.json())
             .then(data => {
                 this.setState({ photoStatistics: data });
-                console.log(data);
+                // console.log(data);
 
                 const dates = [];
                 const views = [];
@@ -63,10 +63,10 @@ export default class PhotoStatistics extends Component {
                     this.setState({ downloads: downloads });
                 });
 
-                console.log(this.state.dates);
-                console.log(this.state.views);
-                console.log(this.state.likes);
-                console.log(this.state.downloads);
+                // console.log(this.state.dates);
+                // console.log(this.state.views);
+                // console.log(this.state.likes);
+                // console.log(this.state.downloads);
 
             })
             .catch(err => console.log(err));
@@ -170,45 +170,43 @@ export default class PhotoStatistics extends Component {
 
         return (
             <div>
-                <h1>Photo Statistics</h1>
+                <h1 className="photo-stats-title">Photo Statistics</h1>
+                <div className="charts">
+                    <div className="chart-container">
+                        <Line
+                            datasetKeyProvider={lineChartData.datasets.label}
+                            width={100}
+                            height={50}
+                            options={{
+                                legend: {
+                                    display: true,
+                                    position: 'bottom'
+                                },
+                                maintainAspectRatio: false,
 
-
-                <div className="chart-container">
-
-                    <Line
-                        datasetKeyProvider={this.datasetKeyProvider}
-                        width={50}
-                        height={10}
-                        options={{
-                            legend: {
-                                display: true,
-                                position: 'bottom'
-                            },
-                            maintainAspectRatio: false,
-
-                            scales: {
-                                xAxes: [
-                                    {
-                                        type: 'time',
-                                        time: {
-                                            unit: 'day'
+                                scales: {
+                                    xAxes: [
+                                        {
+                                            type: 'time',
+                                            time: {
+                                                unit: 'day'
+                                            }
                                         }
-                                    }
-                                ]
-                            }
-                        }}
-                        data={lineChartData}
-                    />
+                                    ],
+                                }
+                            }}
+                            data={lineChartData}
+                        />
 
-                    <Pie
-                        datasetKeyProvider={this.datasetKeyProvider}
-                        data={pieChartData}
-                        width={100}
-                        height={50}
-                        options={{ maintainAspectRatio: false }}
-                    />
+                        <Pie
+                            datasetKeyProvider={this.datasetKeyProvider}
+                            data={pieChartData}
+                            width={100}
+                            height={50}
+                            options={{ maintainAspectRatio: false }}
+                        />
+                    </div>
                 </div>
-                {this.datasetKeyProvider}
             </div>
         )
     }

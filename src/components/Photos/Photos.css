@@ -40,7 +40,7 @@
   overflow: hidden;
 }
 
-.icon-eye {
+.icon-circle {
   font-size: 22px;
   color: #ffffff !important;
   margin-right: 12px;
@@ -48,7 +48,7 @@
   padding: 6px;
 }
 
-.icon-eye:hover,
+.icon-circle:hover,
 .icon-download:hover {
   background: #000000;
   transition: all 0.2s ease;

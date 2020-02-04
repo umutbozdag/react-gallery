@@ -14,7 +14,11 @@ function App() {
           <Route path="/home" component={Home}></Route>
           <Route exact path="/" component={Home}></Route>
           <Route exact path="/photos" component={Photos}></Route>
-          <Route path="/photos/:photoId" component={PhotoDetail}></Route>
+          <Route path="/photos/:photoId" render={(props) => (
+            <PhotoDetail
+              {...props}
+              key={props.match.params.photoId} />
+          )} />
           <Route exact path="/collections" component={Collections}></Route>
           <Route path="/collections/:collectionId" component={CollectionDetail}></Route>
           <Route exact path="/users/:username" component={UserProfile}></Route>

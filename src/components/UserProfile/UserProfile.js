@@ -12,11 +12,47 @@ export default class UserProfile extends Component {
     }
     componentDidMount() {
         this.getUser();
+        this.getUserPhotos();
+        this.getUserLikes();
+        this.getUserCollections();
     }
 
     getUser = () => {
         const { username } = this.state;
         const url = `https://api.unsplash.com/users/${username}?client_id=${process.env.REACT_APP_API_KEY}`;
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(err => console.log(err));
+    }
+
+    getUserPhotos = () => {
+        const { username } = this.state;
+        const url = `https://api.unsplash.com/users/${username}/photos?client_id=${process.env.REACT_APP_API_KEY}`;
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(err => console.log(err));
+    }
+
+
+    getUserLikes = () => {
+        const { username } = this.state;
+        const url = `https://api.unsplash.com/users/${username}/likes?client_id=${process.env.REACT_APP_API_KEY}`;
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(err => console.log(err));
+    }
+    getUserCollections = () => {
+        const { username } = this.state;
+        const url = `https://api.unsplash.com/users/${username}/collections?client_id=${process.env.REACT_APP_API_KEY}`;
         fetch(url)
             .then(res => res.json())
             .then(data => {

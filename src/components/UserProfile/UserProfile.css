@@ -1,0 +1,33 @@
+.user-profile {
+    display: flex;
+    justify-content: center;
+}
+
+.user-info {
+    margin-left: 24px;
+}
+
+.user-name-info {
+    position: relative;
+    display: inline-block;
+    padding: 0 12px 12px 0;
+}
+
+.user-verified {
+    position: absolute;
+    top: 0;
+    right: -2px;
+}
+
+
+.user-name {
+    font-size: 22px;
+    font-weight: 800;
+    position: relative;
+    display: inline-block;
+}
+
+.user-username {
+    margin-top: -18px;
+    font-style: italic;
+}

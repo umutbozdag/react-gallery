@@ -1,18 +1,35 @@
 .charts {
-    display: flex;
-    justify-content: center;
-    position: relative;
+  display: flex;
+  justify-content: center;
+  position: relative;
 }
 
 .chart-container {
-    width: 700px;
-    height: 500px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 500px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5%;
 }
 
 .photo-stats-title {
-    margin-top: 48px;
-    text-align: center;
+  margin-top: 48px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .chart-container {
+    flex-wrap: wrap;
+    margin-bottom: 40%;
+  }
+}
+
+@media (max-width: 425px) {
+  .chart-container {
+    width: 300px;
+    height: 200px;
+    flex-wrap: wrap;
+    margin-bottom: 60%;
+  }
 }

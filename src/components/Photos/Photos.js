@@ -1,17 +1,10 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom';
 import Search from '../SearchBar/SearchBar';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import Carousel from '../ImageSlider/ImageSlider';
 import './Photos.css';
-import Categories from '../Categories/Categories';
 import Options from '../Options/Options';
 import { Avatar, Icon } from 'antd';
-import Masonry from 'react-masonry-component';
-import { masonryOptions } from '../../helpers/masonryOptions';
-import ModalImage from "react-modal-image";
 import PropTypes from 'prop-types';
-import Photo from '../../Photo/Photo';
+import Photo from '../Photo/Photo';
 
 export default class Photos extends Component {
 

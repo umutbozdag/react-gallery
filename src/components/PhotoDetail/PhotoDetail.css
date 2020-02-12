@@ -1,146 +1,137 @@
 .photo-detail-container {
-    margin-top: 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .photo-detail-info {
-    display: flex;
+  display: flex;
 }
 
 .photo-detail-info .photo-detail-left {
-    margin-right: auto;
+  margin-right: auto;
 }
 
 .photo-detail-info {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .photo-detail-user {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .photo-detail-user img {
-    margin-right: 12px;
+  margin-right: 12px;
 }
 
 .photo-detail-avatar {
-    border-radius: 50%;
+  border-radius: 50%;
 }
 
 .photo-detail-right {
-    display: flex;
-    align-items: center;
-    font-size: 18px;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
 }
 
-.gallery {
-    margin: 0 auto;
-    overflow: hidden;
+.photo-detail-more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .photos {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .photo-info {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    bottom: 18px;
-    align-items: center;
-}
-
-.photo-info .user-avatar {
-    margin-left: 6px;
-}
-
-.photo-info .username {
-    font-weight: 600;
-    color: #ffffff;
-    display: inline-block;
-    margin-left: 6px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  bottom: 18px;
+  align-items: center;
 }
 
 .username:hover {
-    color: #ddd9d9;
-    transition: all 0.2s ease;
+  color: #ddd9d9;
+  transition: all 0.2s ease;
 }
 
 .photo-info .left {
-    display: flex;
+  display: flex;
 }
 
 .right {
-    position: relative;
-}
-
-.gallery {
-    margin: 0 auto;
-    overflow: hidden;
+  position: relative;
 }
 
 .icon-circle {
-    font-size: 22px;
-    color: #ffffff !important;
-    margin-right: 12px;
-    border-radius: 24px;
-    padding: 6px;
+  font-size: 22px;
+  color: #ffffff !important;
+  margin-right: 12px;
+  border-radius: 24px;
+  padding: 6px;
 }
 
 .icon-circle:hover,
 .icon-download:hover {
-    background: #000000;
-    transition: all 0.2s ease;
+  background: #000000;
+  transition: all 0.2s ease;
 }
 
 .download-container {
-    position: relative;
+  position: relative;
 }
 
 .icon-download {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 6px;
-    color: #ffffff !important;
-    font-size: 22px;
-    border-radius: 24px;
-    margin-right: 12px;
-    margin-top: 8px;
-    cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 6px;
+  color: #ffffff !important;
+  font-size: 22px;
+  border-radius: 24px;
+  margin-right: 12px;
+  margin-top: 8px;
+  cursor: pointer;
 }
 
 summary {
-    font-size: 22px;
-    font-weight: 600;
-    outline: none;
-    cursor: pointer;
-    display: inline-block;
-    padding: 12px;
+  font-size: 22px;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 12px;
+  display: inline-block;
 }
 
 summary:hover {
-    background: #000000;
-    transition: all 0.3s ease;
-    color: #ffffff;
+  background: #000000;
+  transition: all 0.3s ease;
+  color: #ffffff;
 }
 
-details:hover {}
+details {
+}
+
+details:hover {
+}
 
 details:hover summary::-webkit-details-marker:hover {
-    color: #68b17e;
-    background: white;
 }
 
-.photo-modal {}
+.photo-modal {
+}
 
 .photo-modal:hover {
-    transform: scale(1.01);
-    transition: all 0.5s ease;
+  transform: scale(1.01);
+  transition: all 0.5s ease;
+}
+.photo-detail-more-img {
+  position: relative;
 }

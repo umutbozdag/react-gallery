@@ -50,10 +50,14 @@ export default class PhotoDetail extends Component {
                     <div>
                         {photo.urls &&
                             <picture>
-                                <source media="(min-width: 1200px)" srcSet={photo.urls.raw + "&w=1000&h=700&fit=crop&fm=jpg"} />
-                                <source media="(min-width: 250px)" srcSet={photo.urls.small} />
-                                <img className="photo" src={photo.urls ? photo.urls.regular : <Spin />}
-                                    alt={photo.description ? photo.description : photo.alt_description}
+                                <source media="(max-width: 1200px)" srcSet={photo.urls.raw + "&w=1000&h=700&fit=crop&fm=jpg"} />
+                                <source media="(max-width: 250px)" srcSet={photo.urls.small} />
+                                <ModalImage
+                                    small={photo.urls && photo.urls.raw + "&w=800&h=700&fit=crop&fm=jpg"}
+                                    large={photo.urls && photo.urls.full}
+                                    alt={photo.alt_description}
+                                    className="photo-modal"
+                                    showRotate
                                 />
                             </picture>
                         }
@@ -84,49 +88,43 @@ export default class PhotoDetail extends Component {
                                     <div>
                                         <h1>More</h1>
                                         {photo.tags &&
-                                            <div>
-                                                <Masonry
-                                                    className={'gallery'}
-                                                    options={masonryOptions}
-                                                    disableImagesLoaded={false}
-                                                    updateOnEachImageLoad={false}
-                                                >
-                                                    {
-                                                        photo.tags.map(tag => (
-                                                            tag.type === 'landing_page' ?
-                                                                <div key={tag.id}>
-                                                                    <ModalImage
-                                                                        small={tag.source.cover_photo.urls.small}
-                                                                        large={tag.source.cover_photo.urls.full}
-                                                                        alt={photo.alt_description}
-                                                                        className="photo-modal"
-                                                                        showRotate
-                                                                    />
-                                                                    <a href={photo.links.download}>
-                                                                        <Icon className="icon-download" type="download" />
-                                                                    </a>
+                                            <div className="photo-detail-more">
+                                                {
+                                                    photo.tags.map(tag => (
+                                                        tag.type === 'landing_page' ?
+                                                            <div className="photo-detail-more-img" key={tag.id}>
+                                                                <ModalImage
+                                                                    small={tag.source.cover_photo.urls.small}
+                                                                    large={tag.source.cover_photo.urls.full}
+                                                                    alt={tag.source.cover_photo.alt_description}
+                                                                    className="photo-modal"
+                                                                    showRotate
+                                                                />
+                                                                <a target="_blank" href={tag.source.cover_photo.links.download}>
+                                                                    <Icon className="icon-download" type="download" />
+                                                                </a>
 
-                                                                    <div className="photo-info">
-                                                                        <Link to={`/photos/${tag.source.cover_photo.id}`}>
-                                                                            <Icon className="icon-circle" type="info-circle" />
-                                                                        </Link>
-                                                                    </div>
+                                                                <div className="photo-info">
+                                                                    <Link to={`/users/${tag.source.cover_photo.user.username}`}>
+                                                                        <Avatar className="user-avatar" src={tag.source.cover_photo.profile_image && tag.source.cover_photo.profile_image.large} />
+                                                                        <p className="username">{tag.source.cover_photo.user.name}</p>
+                                                                    </Link>
+
+                                                                    <Link to={`/photos/${tag.source.cover_photo.id}`}>
+                                                                        <Icon className="icon-circle" type="info-circle" />
+                                                                    </Link>
                                                                 </div>
-
-                                                                : ''
-                                                        ))
-                                                    }
-                                                </Masonry>
+                                                            </div>
+                                                            : ''
+                                                    ))
+                                                }
                                             </div>
                                         }
                                     </div>
                                 </div>
 
                             </div>
-
-
                         }
-
                     </div>
                 </div>
 

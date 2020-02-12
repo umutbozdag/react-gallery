@@ -4,7 +4,7 @@ import { Avatar, Icon } from 'antd';
 import Masonry from 'react-masonry-component';
 import ModalImage from "react-modal-image";
 import { Link } from 'react-router-dom';
-import { masonryOptions } from '../helpers/masonryOptions';
+import { masonryOptions } from '../../helpers/masonryOptions';
 
 export default function Photo(props) {
     return (

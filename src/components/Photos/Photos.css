@@ -27,14 +27,6 @@
   transition: all 0.2s ease;
 }
 
-.photo-info .left {
-  display: flex;
-}
-
-.right {
-  position: relative;
-}
-
 .gallery {
   margin: 0 auto;
   overflow: hidden;
@@ -69,4 +61,23 @@
   margin-right: 12px;
   margin-top: 8px;
   cursor: pointer;
+}
+
+.photos-container-top {
+  margin-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 128px;
+}
+
+.no-results {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+@media (max-width: 425px) {
+  .photos-container-top {
+    padding: 0 12px;
+  }
 }

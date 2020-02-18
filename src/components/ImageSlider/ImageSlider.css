@@ -1,21 +1,21 @@
 /* For demo */
 .ImageSlider {
-    margin-top: 2%;
-    display: flex;
-    justify-content: center;
+  margin-top: 2%;
+  display: flex;
+  justify-content: center;
 }
 
 .ant-carousel {
-    width: 600px;
+  width: 600px;
 }
 
 .ant-carousel .slick-slide {
-    text-align: center;
-    line-height: 400px;
-    background: #364d79;
-    overflow: hidden;
+  text-align: center;
+  line-height: 400px;
+  background: #364d79;
+  overflow: hidden;
 }
 
 .ant-carousel .slick-slide h3 {
-    color: #fff;
+  color: #fff;
 }

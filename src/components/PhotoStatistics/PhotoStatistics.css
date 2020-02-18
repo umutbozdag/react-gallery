@@ -30,6 +30,15 @@
     width: 300px;
     height: 200px;
     flex-wrap: wrap;
-    margin-bottom: 60%;
+    margin-bottom: 80%;
+  }
+}
+
+@media (max-width: 325px) {
+  .chart-container {
+    width: 250px;
+    height: 200px;
+    flex-wrap: wrap;
+    margin-bottom: 80%;
   }
 }

@@ -106,7 +106,9 @@ export default class PhotoDetail extends Component {
 
                                                                 <div className="photo-info">
                                                                     <Link to={`/users/${tag.source.cover_photo.user.username}`}>
-                                                                        <Avatar className="user-avatar" src={tag.source.cover_photo.profile_image && tag.source.cover_photo.profile_image.large} />
+                                                                        {tag.source.cover_photo.user &&
+                                                                            <Avatar className="user-avatar" src={tag.source.cover_photo.user.profile_image.small} />
+                                                                        }
                                                                         <p className="username">{tag.source.cover_photo.user.name}</p>
                                                                     </Link>
 

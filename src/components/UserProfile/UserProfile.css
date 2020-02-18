@@ -1,33 +1,71 @@
 .user-profile {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  margin-top: 48px;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-avatar {
+  border-radius: 50%;
+}
+
+.UserProfile {
+  display: flex;
+  justify-content: center;
 }
 
 .user-info {
-    margin-left: 24px;
+  margin-left: 18px;
 }
 
-.user-name-info {
-    position: relative;
-    display: inline-block;
-    padding: 0 12px 12px 0;
+.user-bio {
+  width: 300px;
+}
+
+.user-name {
+  position: relative;
+  display: inline-block;
 }
 
 .user-verified {
-    position: absolute;
-    top: 0;
-    right: -2px;
+  font-size: 12px;
+  position: absolute;
+  right: -14px;
+  top: -5px;
 }
 
-
-.user-name {
-    font-size: 22px;
-    font-weight: 800;
-    position: relative;
-    display: inline-block;
+.user-extra-info {
+  display: flex;
 }
 
-.user-username {
-    margin-top: -18px;
-    font-style: italic;
+.user-location {
+  padding: 0 4px;
+  margin-right: 12px;
+}
+
+.icon-location,
+.icon-link {
+  margin-right: 4px;
+}
+
+.user-interest {
+  margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+  .user-profile {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .user-info {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .user-bio {
+    text-align: center;
+  }
 }

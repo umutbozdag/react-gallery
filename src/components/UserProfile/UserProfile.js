@@ -24,69 +24,47 @@ export default class UserProfile extends Component {
   componentDidMount() {
     this.getUser();
     this.getUserPhotos();
-    // this.getUserLikes();
-    // this.getUserCollections();
+    this.getUserLikes();
+    this.getUserCollections();
   }
 
-  getUser = () => {
+  getUser = async () => {
     const { username } = this.state;
     const url = `https://api.unsplash.com/users/${username}?client_id=${process.env.REACT_APP_API_KEY}`;
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ userInfo: data });
-        console.log(data);
-      })
-      .catch(err => console.log(err));
+    const response = await fetch(url);
+    const data = await response.json();
+    this.setState({ userInfo: data });
   };
 
-  getUserPhotos = () => {
+  getUserPhotos = async () => {
     const { username } = this.state;
     const url = `https://api.unsplash.com/users/${username}/photos?client_id=${process.env.REACT_APP_API_KEY}`;
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        this.setState({ userPhotos: data });
-      })
-      .catch(err => console.log(err));
+    const response = await fetch(url);
+    const data = await response.json();
+    this.setState({ userPhotos: data });
   };
 
   handleTabChange = key => {
     console.log(key);
-    if (key == 1) {
-      this.getUserPhotos();
-    } else if (key == 2) {
-      this.getUserCollections();
-    } else if (key == 3) {
-      this.getUserLikes();
-    }
   };
 
-  getUserLikes = () => {
+  getUserLikes = async () => {
     const { username } = this.state;
     const url = `https://api.unsplash.com/users/${username}/likes?client_id=${process.env.REACT_APP_API_KEY}`;
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        this.setState({ userLikes: data });
-      })
-      .catch(err => console.log(err));
+    const response = await fetch(url);
+    const data = await response.json();
+    this.setState({ userLikes: data });
   };
-  getUserCollections = () => {
+  getUserCollections = async () => {
     const { username } = this.state;
     const url = `https://api.unsplash.com/users/${username}/collections?client_id=${process.env.REACT_APP_API_KEY}`;
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ userCollections: data });
-        console.log(data);
-      })
-      .catch(err => console.log(err));
+    const response = await fetch(url);
+    const data = await response.json();
+    this.setState({ userCollections: data });
+    console.log(data);
   };
   render() {
-    const { userInfo } = this.state;
+    const { userInfo, userPhotos, userLikes, userCollections } = this.state;
     return (
       <div>
         <div className="user-profile">
@@ -125,10 +103,10 @@ export default class UserProfile extends Component {
               )}
 
               {userInfo.portfolio_url ? (
-                <p className="user-website">
+                <p className="user-portfolio">
                   <Icon className="icon-link" type="link" />
                   <a target="_blank" href={userInfo.portfolio_url}>
-                    Website
+                    Portfolio
                   </a>
                 </p>
               ) : (
@@ -154,17 +132,28 @@ export default class UserProfile extends Component {
           </div>
         </div>
         <Tabs defaultActiveKey="1" onChange={this.handleTabChange}>
-          <TabPane tab="Photos" key="1">
+          <TabPane tab={`Photos ${userPhotos.length}`} key="1">
             <UserPhotos
               getUserPhotos={this.getUserPhotos}
               userPhotos={this.state.userPhotos}
             />
           </TabPane>
-          <TabPane tab="Collections" key="2">
-            <UserCollections />
+          <TabPane
+            tab={`Collections ${
+              userCollections.cover_photo ? userCollections.length : "0"
+            }`}
+            key="2"
+          >
+            <UserCollections
+              getUserCollections={this.getUserCollections}
+              userCollections={this.state.userCollections}
+            />
           </TabPane>
-          <TabPane tab="Likes" key="3">
-            <UserLikes />
+          <TabPane tab={`Likes ${userLikes.length}`} key="3">
+            <UserLikes
+              getUserLikes={this.getUserLikes}
+              userLikes={this.state.userLikes}
+            />
           </TabPane>
         </Tabs>
       </div>

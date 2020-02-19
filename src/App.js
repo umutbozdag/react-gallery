@@ -32,6 +32,7 @@ function App() {
           />
           <Route exact path="/collections" component={Collections}></Route>
           <Route
+            exact
             path="/collections/:collectionId"
             component={CollectionDetail}
           ></Route>

@@ -35,9 +35,14 @@ function App() {
             path="/collections/:collectionId"
             component={CollectionDetail}
           ></Route>
-          <Route exact path="/users/:username" component={UserProfile}></Route>
-          <Route path="/about" component={About}></Route>
-          <Route path="/" component={NotFound}></Route>
+          <Route
+            path="/users/:username"
+            render={props => (
+              <UserProfile {...props} key={props.match.params.username} />
+            )}
+          />
+          <Route path="/about" component={About} />
+          <Route path="/" component={NotFound} />
         </Switch>
       </Router>
       <BackTop />

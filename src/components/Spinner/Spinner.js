@@ -1,10 +1,11 @@
 import React from "react";
 import { Spin } from "antd";
+import "./Spinner.css";
 
 export default function Spinner() {
   return (
     <div className="Spinner">
-      <Spin />
+      <Spin size="large" />
     </div>
   );
 }

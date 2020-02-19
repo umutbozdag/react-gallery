@@ -29,7 +29,6 @@
 
 .gallery {
   margin: 0 auto;
-  overflow: hidden;
 }
 
 .icon-circle {
@@ -76,7 +75,7 @@
   font-weight: 600;
 }
 
-@media (max-width: 425px) {
+@media (max-width: 500px) {
   .photos-container-top {
     padding: 0 12px;
   }

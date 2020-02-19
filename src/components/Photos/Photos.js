@@ -45,7 +45,14 @@ export default class Photos extends Component {
 
   handleOptionChange = value => {
     console.log(`selected ${value}`);
-    this.getPhotos(value);
+    this.setState(
+      {
+        orderBy: value
+      },
+      () => {
+        this.getPhotos(this.state.orderBy);
+      }
+    );
   };
 
   componentDidMount() {
@@ -59,17 +66,16 @@ export default class Photos extends Component {
       hasQuery,
       userInput,
       photos,
-      searchResult
+      searchResult,
+      orderBy
     } = this.state;
 
     this.setState({ start: start + 1 });
-    let orderBy = value;
+    // let orderBy = value;
     if (hasQuery) {
       console.log("search images");
 
-      const url = `https://api.unsplash.com/search/photos?per_page=${count}&page=${start}&query=${userInput}&order_by=${
-        orderBy ? orderBy : "latest"
-      }&client_id=${process.env.REACT_APP_API_KEY}`;
+      const url = `https://api.unsplash.com/search/photos?per_page=${count}&page=${start}&query=${userInput}&order_by=${value}&client_id=${process.env.REACT_APP_API_KEY}`;
       fetch(url)
         .then(res => res.json())
         .then(data => {
@@ -81,9 +87,7 @@ export default class Photos extends Component {
     } else {
       console.log("default images");
 
-      const url = `https://api.unsplash.com/photos?per_page=${count}&page=${start}&order_by=${
-        orderBy ? orderBy : "latest"
-      }&client_id=${process.env.REACT_APP_API_KEY}`;
+      const url = `https://api.unsplash.com/photos?per_page=${count}&page=${start}&order_by=${orderBy}&client_id=${process.env.REACT_APP_API_KEY}`;
       fetch(url)
         .then(res => res.json())
         .then(data => {

@@ -1,13 +1,8 @@
 import React, { Component } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { Link } from "react-router-dom";
 import Spinner from "../Spinner/Spinner";
 import Search from "../SearchBar/SearchBar";
-import { Avatar, Icon, Tag, Spin } from "antd";
-import Masonry from "react-masonry-component";
-import { masonryOptions } from "../../helpers/masonryOptions";
 import "./Collections.css";
-import NoContent from "../NoContent/NoContent";
+import Collection from "../Collection/Collection";
 
 class Collections extends Component {
   constructor(props) {
@@ -99,120 +94,12 @@ class Collections extends Component {
         />
 
         {collections.length != 0 ? (
-          hasQuery ? (
-            <div className="collections">
-              <InfiniteScroll
-                dataLength={searchResult.length}
-                next={this.getCollections}
-                hasMore={true}
-                loader={<Spin />}
-                endMessage={<NoContent />}
-              >
-                <Masonry
-                  className="gallery"
-                  options={masonryOptions}
-                  disableImagesLoaded={false}
-                  updateOnEachImageLoad={false}
-                >
-                  {searchResult.map((photo, i) => (
-                    <div className="collection" key={i}>
-                      <Link to={`/collections/${photo.id}`}>
-                        <div className="collection-photo">
-                          <img
-                            className="collection-photo"
-                            src={
-                              photo.cover_photo.urls &&
-                              photo.cover_photo.urls.small
-                            }
-                            alt=""
-                          />
-                        </div>
-                      </Link>
-                      <Link to={`/collections/${photo.id}`}>
-                        <p className="photo-title">{photo.title}</p>
-                      </Link>
-                      <p className="total-photos">
-                        Total Photos: {photo.total_photos}
-                      </p>
-                      <div className="collection-tags">
-                        {photo.tags.map((tag, index) => (
-                          <Tag className="tag" key={index}>
-                            {tag.title}
-                          </Tag>
-                        ))}
-                      </div>
-
-                      <div className="photo-info">
-                        <Link to={`/users/${photo.user.username}`}>
-                          <Avatar
-                            className="user-avatar"
-                            src={photo.user.profile_image.large}
-                          />
-                          <p className="username">{photo.user.name}</p>
-                        </Link>
-                      </div>
-                    </div>
-                  ))}
-                </Masonry>
-              </InfiniteScroll>
-            </div>
-          ) : (
-            <div className="collections">
-              <InfiniteScroll
-                dataLength={collections.length}
-                next={this.getCollections}
-                hasMore={true}
-                loader={<Spin />}
-                endMessage={<NoContent />}
-              >
-                <Masonry
-                  className="gallery"
-                  options={masonryOptions}
-                  disableImagesLoaded={false}
-                  updateOnEachImageLoad={false}
-                >
-                  {collections.map((photo, i) => (
-                    <div className="collection" key={i}>
-                      <Link to={`/collections/${photo.id}`}>
-                        <div className="collection-photo">
-                          <img
-                            className="collection-photo"
-                            src={
-                              photo.cover_photo.urls &&
-                              photo.cover_photo.urls.small
-                            }
-                            alt=""
-                          />
-                        </div>
-                      </Link>
-                      <Link to={`/collections/${photo.id}`}>
-                        <p className="photo-title">{photo.title}</p>
-                      </Link>
-                      <p className="total-photos">
-                        {photo.total_photos} Photos
-                      </p>
-                      {/* <div className="photo-info">
-                        <Link to={`/users/${photo.user.username}`}>
-                          <Avatar
-                            className="user-avatar"
-                            src={photo.user.profile_image.large}
-                          />
-                          <p className="username">{photo.user.name}</p>
-                        </Link>
-                      </div> */}
-                      <div className="collection-tags">
-                        {photo.tags.slice(0, 3).map((tag, index) => (
-                          <Tag color="#161616" className="tag" key={index}>
-                            {tag.title}
-                          </Tag>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </Masonry>
-              </InfiniteScroll>
-            </div>
-          )
+          <Collection
+            searchResult={searchResult}
+            getCollections={this.getCollections}
+            collections={hasQuery ? searchResult : collections}
+            collectionsLength={collections.length}
+          />
         ) : (
           <Spinner />
         )}

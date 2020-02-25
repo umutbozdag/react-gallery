@@ -1,5 +1,5 @@
 export const masonryOptions = {
-  transitionDuration: "0.5s",
+  transitionDuration: 0,
   isFitWidth: true,
   gutter: 10
 };

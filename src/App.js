@@ -11,7 +11,8 @@ import {
   About,
   NotFound,
   Categories,
-  UserProfile
+  UserProfile,
+  User
 } from "./components/index";
 import { BackTop } from "antd";
 
@@ -19,7 +20,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Nav></Nav>
+        <Nav />
         <Switch>
           <Route path="/home" component={Home}></Route>
           <Route exact path="/" component={Home}></Route>
@@ -30,6 +31,9 @@ function App() {
               <PhotoDetail {...props} key={props.match.params.photoId} />
             )}
           />
+          <Route exact path="/users" component={UserProfile}>
+            {" "}
+          </Route>
           <Route exact path="/collections" component={Collections}></Route>
           <Route
             exact
@@ -44,6 +48,7 @@ function App() {
           />
           <Route path="/about" component={About} />
           <Route path="/" component={NotFound} />
+          <Route path="/users"></Route>
         </Switch>
       </Router>
       <BackTop />

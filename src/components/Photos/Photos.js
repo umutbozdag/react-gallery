@@ -59,7 +59,7 @@ export default class Photos extends Component {
     this.getPhotos();
   }
 
-  getPhotos = value => {
+  getPhotos = orderValue => {
     const {
       count,
       start,
@@ -71,11 +71,10 @@ export default class Photos extends Component {
     } = this.state;
 
     this.setState({ start: start + 1 });
-    // let orderBy = value;
     if (hasQuery) {
       console.log("search images");
 
-      const url = `https://api.unsplash.com/search/photos?per_page=${count}&page=${start}&query=${userInput}&order_by=${value}&client_id=${process.env.REACT_APP_API_KEY}`;
+      const url = `https://api.unsplash.com/search/photos?per_page=${count}&page=${start}&query=${userInput}&order_by=${orderValue}&client_id=${process.env.REACT_APP_API_KEY}`;
       fetch(url)
         .then(res => res.json())
         .then(data => {
@@ -117,10 +116,10 @@ export default class Photos extends Component {
           </div>
         </div>
         <Photo
-          searchResult={searchResult}
           hasQuery={hasQuery}
-          photos={photos}
+          photos={hasQuery ? searchResult : photos}
           getPhotos={this.getPhotos}
+          photosLength={photos.length}
         />
       </div>
     );

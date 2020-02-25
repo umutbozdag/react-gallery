@@ -11,115 +11,55 @@ import Spinner from "../Spinner/Spinner";
 export default function Photo(props) {
   return (
     <div className="container">
-      {props.hasQuery ? (
-        props.searchResult.length != 0 ? (
-          <div>
-            <InfiniteScroll
-              dataLength={props.searchResult.length}
-              next={props.getPhotos}
-              hasMore={true}
-              endMessage={
-                <p style={{ textAlign: "center" }}>
-                  <b>There is no more photo!</b>
-                </p>
-              }
-            >
-              <Masonry
-                className="gallery"
-                options={masonryOptions}
-                disableImagesLoaded={false}
-                updateOnEachImageLoad={false}
-              >
-                {props.searchResult.map((photo, i) => (
-                  <div key={i}>
-                    <ModalImage
-                      small={photo.urls && photo.urls.small}
-                      large={photo.urls && photo.urls.full}
-                      alt={photo.alt_description}
-                      className="photo-modal"
-                      showRotate
+      <div>
+        <InfiniteScroll
+          dataLength={
+            props.hasQuery ? props.searchResult.length : props.photosLength
+          }
+          next={props.getPhotos}
+          hasMore={true}
+          endMessage={
+            <p style={{ textAlign: "center" }}>
+              <b>There is no more photo!</b>
+            </p>
+          }
+        >
+          <Masonry
+            className="gallery"
+            options={masonryOptions}
+            disableImagesLoaded={false}
+            updateOnEachImageLoad={false}
+          >
+            {props.photos.map((photo, i) => (
+              <div key={i}>
+                <ModalImage
+                  small={photo.urls && photo.urls.small}
+                  large={photo.urls && photo.urls.full}
+                  alt={photo.alt_description}
+                  className="photo-modal"
+                  showRotate
+                />
+                <a target="_blank" href={photo.links.download}>
+                  <Icon className="icon-download" type="download" />
+                </a>
+
+                <div className="photo-info">
+                  <Link to={`/users/${photo.user.username}`}>
+                    <Avatar
+                      className="user-avatar"
+                      src={photo.user.profile_image.large}
                     />
-                    <a target="_blank" href={photo.links.download}>
-                      <Icon className="icon-download" type="download" />
-                    </a>
-
-                    <div className="photo-info">
-                      <Link to={`/users/${photo.user.username}`}>
-                        <Avatar
-                          className="user-avatar"
-                          src={photo.user.profile_image.large}
-                        />
-                        <p className="username">{photo.user.name}</p>
-                      </Link>
-
-                      <Link to={`/photos/${photo.id}`}>
-                        <Icon className="icon-circle" type="info-circle" />
-                      </Link>
-                    </div>
-                  </div>
-                ))}
-              </Masonry>
-            </InfiniteScroll>
-          </div>
-        ) : (
-          <Spinner />
-        )
-      ) : (
-        <div>
-          {props.photos.length != 0 ? (
-            <div className="container">
-              <InfiniteScroll
-                dataLength={props.photos.length}
-                next={props.getPhotos}
-                hasMore={true}
-                endMessage={
-                  <p style={{ textAlign: "center" }}>
-                    <b>There is no more photo!</b>
-                  </p>
-                }
-              >
-                <Masonry
-                  className="gallery"
-                  options={masonryOptions}
-                  disableImagesLoaded={false}
-                  updateOnEachImageLoad={false}
-                >
-                  {props.photos.map((photo, i) => (
-                    <div key={i}>
-                      <ModalImage
-                        small={photo.urls && photo.urls.small}
-                        large={photo.urls && photo.urls.full}
-                        alt={photo.alt_description}
-                        className="photo-modal"
-                        showRotate
-                      />
-                      <a target="_blank" href={photo.links.download}>
-                        <Icon className="icon-download" type="download" />
-                      </a>
-
-                      <div className="photo-info">
-                        <Link to={`/users/${photo.user.username}`}>
-                          <Avatar
-                            className="user-avatar"
-                            src={photo.user.profile_image.large}
-                          />
-                          <p className="username">{photo.user.name}</p>
-                        </Link>
-
-                        <Link to={`/photos/${photo.id}`}>
-                          <Icon className="icon-circle" type="info-circle" />
-                        </Link>
-                      </div>
-                    </div>
-                  ))}
-                </Masonry>
-              </InfiniteScroll>
-            </div>
-          ) : (
-            <Spinner />
-          )}
-        </div>
-      )}
+                    <p className="username">{photo.user.name}</p>
+                  </Link>
+                  <Link to={`/photos/${photo.id}`}>
+                    <Icon className="icon-circle" type="info-circle" />
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </Masonry>
+        </InfiniteScroll>
+      </div>
     </div>
   );
 }

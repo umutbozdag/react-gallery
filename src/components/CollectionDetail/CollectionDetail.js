@@ -99,7 +99,7 @@ export default class CollectionDetail extends Component {
 CollectionDetail.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
-      collectionId: PropTypes.number.isRequired
+      collectionId: PropTypes.string.isRequired
     })
   })
 };

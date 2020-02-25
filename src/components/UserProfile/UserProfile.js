@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Icon, Tag, Tabs, Tooltip } from "antd";
 import "./UserProfile.css";
-import { Link } from "react-router-dom";
 import UserPhotos from "../UserPhotos/UserPhotos";
 import UserCollections from "../UserCollections/UserCollections";
 import UserLikes from "../UserLikes/UserLikes";

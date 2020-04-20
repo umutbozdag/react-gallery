@@ -6,16 +6,13 @@ import ModalImage from "react-modal-image";
 import { Link } from "react-router-dom";
 import { masonryOptions } from "../../helpers/masonryOptions";
 import PropTypes from "prop-types";
-import Spinner from "../Spinner/Spinner";
 
 export default function Photo(props) {
   return (
     <div className="container">
       <div>
         <InfiniteScroll
-          dataLength={
-            props.hasQuery ? props.searchResult.length : props.photosLength
-          }
+          dataLength={props.photos.length}
           next={props.getPhotos}
           hasMore={true}
           endMessage={

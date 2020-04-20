@@ -1,7 +1,6 @@
 import About from './About/About';
 import CollectionDetail from './CollectionDetail/CollectionDetail';
 import Collections from './Collections/Collections';
-import Home from './Home/Home';
 import Nav from './Nav/Nav';
 import NotFound from './NotFound/NotFound';
 import PhotoDetail from './PhotoDetail/PhotoDetail';
@@ -15,7 +14,6 @@ export {
     About,
     CollectionDetail,
     Collections,
-    Home,
     Nav,
     NotFound,
     PhotoDetail,

@@ -93,7 +93,7 @@ class Collections extends Component {
           onSubmitHandler={this.onSubmitHandler}
         />
 
-        {collections.length != 0 ? (
+        {collections.length !== 0 ? (
           <Collection
             searchResult={searchResult}
             getCollections={this.getCollections}

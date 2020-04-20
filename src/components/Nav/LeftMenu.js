@@ -11,9 +11,9 @@ function LeftMenu() {
       <Menu.Item>
         <Link to="/collections">Collections</Link>
       </Menu.Item>
-      <Menu.Item>
+      {/* <Menu.Item>
         <Link to="users">Users</Link>
-      </Menu.Item>
+      </Menu.Item> */}
     </Menu>
   );
 }

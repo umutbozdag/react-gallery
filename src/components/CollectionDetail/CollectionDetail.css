@@ -4,6 +4,9 @@
   bottom: 0;
 }
 
+.collection-detail-title {
+  margin-left: 100px;
+}
 .gallery {
   margin: 0 auto;
 }

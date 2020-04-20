@@ -1,6 +1,6 @@
 import React from 'react'
 import { Tabs } from 'antd';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 const { TabPane } = Tabs;
 

@@ -119,7 +119,6 @@ export default class Photos extends Component {
           hasQuery={hasQuery}
           photos={hasQuery ? searchResult : photos}
           getPhotos={this.getPhotos}
-          photosLength={photos.length}
         />
       </div>
     );

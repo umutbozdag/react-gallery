@@ -3,7 +3,6 @@ import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import {
   Nav,
-  Home,
   Photos,
   PhotoDetail,
   Collections,
@@ -12,8 +11,9 @@ import {
   NotFound,
   Categories,
   UserProfile,
-  User
+  User,
 } from "./components/index";
+import Home from './pages/Home'
 import { BackTop } from "antd";
 
 function App() {
@@ -32,7 +32,6 @@ function App() {
             )}
           />
           <Route exact path="/users" component={UserProfile}>
-            {" "}
           </Route>
           <Route exact path="/collections" component={Collections}></Route>
           <Route
@@ -48,7 +47,7 @@ function App() {
           />
           <Route path="/about" component={About} />
           <Route path="/" component={NotFound} />
-          <Route path="/users"></Route>
+          {/* <Route path="/users"></Route> */}
         </Switch>
       </Router>
       <BackTop />

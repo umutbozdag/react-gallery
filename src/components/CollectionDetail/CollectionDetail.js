@@ -34,13 +34,11 @@ export default class CollectionDetail extends Component {
       .then(res => res.json())
       .then(data => {
         this.setState({ collectionDetail: collectionDetail.concat(data) });
-        console.log('DATA', data)
       });
   };
 
   render() {
     const { collectionDetail } = this.state;
-    {console.log('CD', collectionDetail)}
     return (
       <div>
         <h1 className="collection-detail-title">Collection Detail</h1>

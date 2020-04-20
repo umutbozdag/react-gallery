@@ -30,21 +30,16 @@ export default class Photos extends Component {
         .then(res => res.json())
         .then(data => {
           this.setState({ searchResult: data.results, hasQuery: true });
-          console.log(searchResult);
-          console.log("query:" + userInput);
-          console.log(url);
         })
         .catch(err => console.log(err));
     }
   };
 
   onChangeHandler = e => {
-    console.log(e.target.value);
     this.setState({ userInput: e.target.value });
   };
 
   handleOptionChange = value => {
-    console.log(`selected ${value}`);
     this.setState(
       {
         orderBy: value
@@ -72,27 +67,20 @@ export default class Photos extends Component {
 
     this.setState({ start: start + 1 });
     if (hasQuery) {
-      console.log("search images");
-
       const url = `https://api.unsplash.com/search/photos?per_page=${count}&page=${start}&query=${userInput}&order_by=${orderValue}&client_id=${process.env.REACT_APP_API_KEY}`;
       fetch(url)
         .then(res => res.json())
         .then(data => {
           this.setState({ searchResult: [...data.results, ...searchResult] });
-          console.log(data);
-          console.log(url);
         })
         .catch(err => console.log(err));
     } else {
-      console.log("default images");
 
       const url = `https://api.unsplash.com/photos?per_page=${count}&page=${start}&order_by=${orderBy}&client_id=${process.env.REACT_APP_API_KEY}`;
       fetch(url)
         .then(res => res.json())
         .then(data => {
           this.setState({ photos: [...data, ...photos] });
-          console.log(data);
-          console.log(url);
         })
         .catch(err => console.log(err));
     }

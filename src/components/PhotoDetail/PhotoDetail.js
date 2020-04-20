@@ -29,7 +29,6 @@ export default class PhotoDetail extends Component {
             .then(res => res.json())
             .then(data => {
                 this.setState({ photo: data });
-                console.log(this.state.photo);
             })
             .catch(err => console.log(err));
     }

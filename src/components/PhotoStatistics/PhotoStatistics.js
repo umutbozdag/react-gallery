@@ -30,7 +30,6 @@ export default class PhotoStatistics extends Component {
       .then(res => res.json())
       .then(data => {
         this.setState({ photoStatistics: data });
-        // console.log(data);
 
         const dates = [];
         const views = [];
@@ -62,11 +61,6 @@ export default class PhotoStatistics extends Component {
             this.setState({ downloads: downloads });
           }
         );
-
-        // console.log(this.state.dates);
-        // console.log(this.state.views);
-        // console.log(this.state.likes);
-        // console.log(this.state.downloads);
       })
       .catch(err => console.log(err));
   };

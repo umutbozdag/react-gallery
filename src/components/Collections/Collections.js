@@ -39,10 +39,7 @@ class Collections extends Component {
         .then(res => res.json())
         .then(data => {
           this.setState({ searchResult: data.results, hasQuery: true });
-          console.log("query:" + userInput);
-          console.log(url);
-          console.log(data);
-          console.log(searchResult);
+        
         })
         .catch(err => console.log(err));
     } else {
@@ -54,7 +51,6 @@ class Collections extends Component {
         .then(res => res.json())
         .then(data => {
           this.setState({ collections: collections.concat(data) });
-          console.log(data);
         });
     }
   };
@@ -69,16 +65,11 @@ class Collections extends Component {
       .then(res => res.json())
       .then(data => {
         this.setState({ searchResult: data.results, hasQuery: true });
-        console.log("query:" + userInput);
-        console.log(url);
-        console.log(data);
-        console.log(searchResult);
       })
       .catch(err => console.log(err));
   };
 
   onChangeHandler = e => {
-    console.log(e.target.value);
     this.setState({ userInput: e.target.value });
   };
 

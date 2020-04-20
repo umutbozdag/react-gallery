@@ -44,7 +44,6 @@ export default class UserProfile extends Component {
   };
 
   handleTabChange = key => {
-    console.log(key);
   };
 
   getUserLikes = async () => {
@@ -60,7 +59,6 @@ export default class UserProfile extends Component {
     const response = await fetch(url);
     const data = await response.json();
     this.setState({ userCollections: data });
-    console.log(data);
   };
   render() {
     const { userInfo, userPhotos, userLikes, userCollections } = this.state;

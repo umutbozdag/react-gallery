@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { Menu, Icon } from "antd";
+import React from "react";
+import { Menu } from "antd";
 import { Link } from "react-router-dom";
 
 function LeftMenu() {
   return (
-    <Menu mode="horizontal">
+    <Menu mode="vertical">
       <Menu.Item>
         <Link to="/photos">Photos</Link>
       </Menu.Item>

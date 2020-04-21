@@ -1,17 +1,13 @@
-import React, { Component } from 'react';
-import { Menu } from 'antd';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Menu } from "antd";
 
 function RightMenu() {
-
-    return (
-        <div>
-            <Menu mode="horizontal">
-                <Menu.Item key="about">
-                    <Link to='/about'>About</Link>
-                </Menu.Item>
-            </Menu>
-        </div>
-    );
+  return (
+    <div>
+      <Menu mode="horizontal">
+        <Menu.Item key="about"></Menu.Item>
+      </Menu>
+    </div>
+  );
 }
 export default RightMenu;

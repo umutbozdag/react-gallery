@@ -8,16 +8,16 @@ import "./Nav.css";
 class Nav extends Component {
   state = {
     current: "mail",
-    visible: false
+    visible: false,
   };
   showDrawer = () => {
     this.setState({
-      visible: true
+      visible: true,
     });
   };
   onClose = () => {
     this.setState({
-      visible: false
+      visible: false,
     });
   };
 
@@ -31,9 +31,7 @@ class Nav extends Component {
           <div className="leftMenu">
             <LeftMenu />
           </div>
-          <div className="rightMenu">
-            <RightMenu />
-          </div>
+          <div className="rightMenu"></div>
           <Button className="barsMenu" type="primary" onClick={this.showDrawer}>
             <span className="barsBtn"></span>
           </Button>

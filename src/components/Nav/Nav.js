@@ -36,9 +36,9 @@ class Nav extends Component {
             <span className="barsBtn"></span>
           </Button>
           <Drawer
-            title="ReactGallery"
+            title="React Gallery"
             placement="right"
-            closable={false}
+            closable={true}
             onClose={this.onClose}
             visible={this.state.visible}
           >

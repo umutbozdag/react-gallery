@@ -15,7 +15,7 @@
     "react-masonry-component": "^6.2.1",
     "react-modal-image": "^2.5.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.3.0"
+    "react-scripts": "5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -42,7 +42,7 @@
     "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.18.0",
     "babel-eslint": "^10.0.3",
-    "eslint": "^6.8.0",
+    "eslint": "^9.39.1",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-ns": "^1.1.0",
